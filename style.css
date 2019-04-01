@@ -1,0 +1,85 @@
+html, body, section {
+    height: 100%;
+}
+
+.state-1 {
+}
+
+.state-1 main {
+    height: calc(100% - 20vh);
+    border: 1px red solid;
+    padding: 10vh 12%;
+}
+
+.state-1 main .left {
+    float: left;
+    width: 40%;
+    background: bisque;
+    height: 60vh;
+}
+.state-1 main .left .action{
+    display: flex;
+    justify-content: space-around;
+    padding: 3vh 0;
+}
+.state-1 main .left .action>svg{
+    width: 5vh;
+    height: 5vh;
+    fill:gray;
+    transition:color 0.5s;
+    cursor: pointer;
+}
+.state-1 main .left .action>svg:hover{
+    fill:#bbbbbb;
+}
+
+.state-1 main .left .action>svg.hidden{
+    display: none;
+}
+
+
+
+.state-1 main .right {
+    float: left;
+    width: 50%;
+    background: aqua;
+    height: 60vh;
+    margin-left: 6%;
+}
+
+.state-1 main .right .tagName{
+    background-color: #2D72F0;
+    font-size: 1.5vh;
+    padding: 0.3vh;
+}
+
+
+
+.state-1 footer {
+    height: 20vh;
+    background: gray;
+    padding:1.2vh 0;
+    text-align: center;
+}
+
+.state-1 footer .channels{
+    display: flex;
+    text-align: center;
+    overflow: hidden;
+    border:1px solid red;
+    margin-left: 200px;
+    margin-right: 200px;
+}
+.state-1 footer .channels .channel{
+    padding:0 3vh;
+    font-size:2vh ;
+}
+.state-1 footer .channels h3{
+
+}
+
+.state-1 footer .channels img{
+    width: 18vh;
+    height: 14vh;
+}
+
