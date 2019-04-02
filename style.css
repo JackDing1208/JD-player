@@ -6,13 +6,15 @@ html, body, section {
 .bg {
     position: absolute;
     z-index: -1;
-    left: -10px;
-    top: -10px;
-    bottom: -10px;
-    right: -10px;
-    background: url("./background.jpg") center center no-repeat;
+    left: 0px;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    background-image: url("./background.jpg");
+    background-position:center center;
+    background-repeat:no-repeat;
     background-size: cover;
-    filter: blur(4px);
+    /*filter: blur(4px);*/
 }
 
 .bg::before {
@@ -22,63 +24,121 @@ html, body, section {
     top: 0;
     bottom: 0;
     right: 0;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.4);
 }
 
 
-.state-1 {
-}
-
-.state-1 main {
+main {
     height: calc(100% - 20vh);
-    border: 1px red solid;
-    padding: 10vh 10%;
-    display: flex;
-    justify-content: space-between;
+    padding: 10vh 0;
+    text-align: center;
 }
-
-.state-1 main .left {
-    width: 40%;
-    background: bisque;
+main .main-wrapper{
+    display: inline-block;
+    max-width: 90%;
+}
+main .left {
+    float: left;
+    width: 50vh;
     height: 60vh;
+    margin-right: 10vh;
 }
 
-.state-1 main .left .action {
+main .left > figure {
+    margin: 0 auto;
+    width: 46vh;
+    height: 46vh;
+    background-image: url(http://cloud.hunger-valley.com/music/public_tuijian_spring.jpg-middle);
+    background-size: cover;
+    background-position: center center;
+}
+
+main .left .action {
+    width: 46vh;
     display: flex;
     justify-content: space-around;
-    padding: 3vh 0;
+    padding: 4.5vh 0;
+    margin: auto auto;
 }
 
-.state-1 main .left .action > svg {
+main .left .action > svg {
     width: 5vh;
     height: 5vh;
-    fill: gray;
+    fill: rgba(255, 255, 255, 0.4);
     transition: color 0.5s;
     cursor: pointer;
 }
 
-.state-1 main .left .action > svg:hover {
-    fill: #bbbbbb;
+main .left .action > svg:hover {
+    fill: rgba(255, 255, 255, 0.8);
 }
 
-.state-1 main .left .action > svg.hidden {
+main .left .action > svg.hidden {
     display: none;
 }
 
-.state-1 main .right {
-    width: 50%;
-    background: aqua;
+main .right {
+    float: left;
+    width: 60vh;
     height: 60vh;
+    text-align: left;
 }
 
-.state-1 main .right .tagName {
+main .right .tagName {
+    display: inline-block;
     background-color: #2D72F0;
-    font-size: 1.5vh;
-    padding: 0.3vh;
+    color: rgba(255, 255, 255, 1);
+    font-size: 1.8vh;
+    padding: 0.6vh;
+    border-radius: 5px;
 }
 
+main .right h1{
+    font-size: 5vh;
+    margin:2vh 0;
+    color: rgba(255, 255, 255, 1)
+}
+main .right h2{
+    color: rgba(255, 255, 255, 1);
+    margin-bottom:2vh;
+    font-size: 3vh
+}
+main .right .lyrics{
+    height: 30vh;
+    font-size: 2vh;
+    line-height: 3vh;
+    overflow: hidden;
+    margin-bottom:2vh;
+    color: rgba(255, 255, 255, 1);
+}
 
-.state-1 footer {
+main .progress{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+main .progress .progressBar{
+    background-color:rgba(255, 255, 255, 0.4) ;
+    width:85%;
+    height: 0.8vh;
+    border-radius: 3px;
+}
+main .progress .progressBar .currentBar{
+    background-color:rgba(255, 255, 255, 1) ;
+    width:50%;
+    height: 0.8vh;
+    border-radius: 3px;
+
+}
+
+main .progress .duration{
+    width: 10%;
+    color: rgba(255, 255, 255, 1);
+    font-size: 1.5vh;
+    font-weight: bold;
+}
+
+footer {
     height: 20vh;
     color: #fff;
     background: rgba(255, 255, 255, 0.2);
@@ -90,13 +150,12 @@ html, body, section {
     align-items: center;
 }
 
-.state-1 footer .channel-wrapper {
+footer .channel-wrapper {
     overflow: hidden;
-    /*border: 1px solid red;*/
-    width: 80%;
+    width: 120vh;
 }
 
-.state-1 footer .icon {
+footer .icon {
     width: 6vh;
     height: 6vh;
     fill: rgba(255, 255, 255, 0.4);
@@ -105,31 +164,38 @@ html, body, section {
     cursor: pointer;
 }
 
-.state-1 footer .icon:hover {
+footer .icon:hover {
     fill: rgba(255, 255, 255, 0.8);
 }
 
 
-.state-1 footer .channels {
+footer .channels {
     display: flex;
     text-align: center;
-    transform: translateX(-40%);
+    /*transform: translateX(-40%);*/
 }
 
-.state-1 footer .channels .channel {
+footer .channels .channel {
     margin: 1vh 3vh;
 }
 
-.state-1 footer .channels .channel:hover{
-    box-shadow: 0 0 .5vh .5vh rgba(255,255,255,0.8);
+footer .channel:first-child{
+    margin-left: 10px;
+}
+footer .channel:last-child{
+    margin-right:10px;
 }
 
-.state-1 footer .channels h3 {
+footer .channels .channel:hover {
+    box-shadow: 0 0 .5vh .5vh rgba(255, 255, 255, 0.8);
+}
+
+footer .channels h3 {
     font-size: 2vh;
-    color: rgba(255,255,255,0.6);
+    color: rgba(255, 255, 255, 0.6);
 }
 
-.state-1 footer .channels img {
+footer .channels img {
 
     width: 20vh;
     height: 14vh;
