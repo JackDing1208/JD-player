@@ -10,7 +10,8 @@ html, body, section {
     top: 0px;
     bottom: 0px;
     right: 0px;
-    background-image: url("./background.jpg");
+    background-image: url(./background.jpg);
+    /*background-image: url(https://i.loli.net/2019/04/02/5ca316e2f0d03.jpg);*/
     background-position:center center;
     background-repeat:no-repeat;
     background-size: cover;
@@ -172,7 +173,8 @@ footer .icon:hover {
 footer .channels {
     display: flex;
     text-align: center;
-    /*transform: translateX(-40%);*/
+    transition:all 0.5s;
+    transform: translateX(-381%);  //初始位置
 }
 
 footer .channels .channel {
@@ -187,6 +189,10 @@ footer .channel:last-child{
 }
 
 footer .channels .channel:hover {
+    box-shadow: 0 0 .5vh .5vh rgba(255, 255, 255, 0.8);
+}
+
+footer .channels .channel.active {
     box-shadow: 0 0 .5vh .5vh rgba(255, 255, 255, 0.8);
 }
 
