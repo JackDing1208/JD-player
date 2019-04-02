@@ -7,7 +7,7 @@
 
 
     $.ajax({
-        url: 'http://api.jirengu.com/fm/getChannels.php',
+        url: '//api.jirengu.com/fm/getChannels.php',
         method: 'get'
     }).done(function (x) {
             let info = JSON.parse(x)
