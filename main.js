@@ -2,14 +2,15 @@ var audio = new Audio()
 var selectedChannel = ''
 var selectedChannelName = ''
 var song = {}
+var allChannel = {}
 
 audio.autoplay = false
 audio.loop = false
-audio.volume= 0.5
+audio.volume = 0.5
 
-init = function () {
+var init = function () {
     $.ajax({
-        url: '//jirenguapi.applinzi.com/fm/getChannels.php',
+        url: '//jirenguapi.applinzi.com/fm/getChannels.php',    //请求频道API
         method: 'get'
     }).done(function (x) {
         let info = JSON.parse(x)
@@ -26,20 +27,11 @@ init = function () {
             img.src = value.cover_small
             channel.append(img)
             channel.append(title)
-
-
         })
-        let $channel = $('.channel')
-        let random = Math.round(Math.random() * ($channel.length - 1))
-        $channel.on('click', function (e) {
-            let $currentChannel = $(e.currentTarget)
-            $currentChannel.addClass('active')
-                .siblings().removeClass('active')
-            selectedChannel = ($currentChannel[0].attributes[1].value)
-            selectedChannelName = ($currentChannel[0].attributes[2].value)
-            songSwitch(selectedChannel)
-        })
-        initPlay($channel, random)
+        allChannel = $('.channel')
+        selectChannel(allChannel)
+        audio.autoplay = true
+        initPlay(allChannel)
     })
 }
 init()
@@ -57,8 +49,6 @@ $button.eq(1).on('click', function () {
     $button.eq(0).removeClass('hidden')
     audio.loop = false
 })
-
-
 $button.eq(2).on('click', function () {
     audio.play()
 })
@@ -74,55 +64,91 @@ audio.addEventListener('playing', function () {
     $button.eq(2).addClass('hidden')
     $button.eq(3).removeClass('hidden')
     progressUpdate()
+    lyricsScroll()
 })
+
+var lyricsScroll = function () {
+    setInterval(function () {
+
+    }), 500
+}
+
 
 audio.addEventListener('pause', function () {
     $button.eq(3).addClass('hidden')
     $button.eq(2).removeClass('hidden')
     window.clearInterval('timer')
-})
-
-audio.addEventListener('ended', function () {
-    if (audio.loop = false) {
+    console.log(audio.ended)
+    if (audio.ended === true && audio.loop === false) {
         console.log('end')
         $button.eq(4).trigger('click')
     }
 })
 
 
-var initPlay = function (channel, random) {
+var initPlay = function (channel) {
+    let random = Math.round(Math.random() * (channel.length - 1))
     channel.eq(random).trigger('click')
 }
-
-
-var songSwitch = function (selectedChannel) {
-    $.getJSON('//jirenguapi.applinzi.com/fm/getSong.php',
-        {channel: selectedChannel})
-        .done(function (x) {
-            audio.autoplay = true
-            song = x.song[0]
-            console.log(song)
-            audio.src = song.url
-            $('.right>.tagName')[0].innerText = selectedChannelName
-            $('.left>h1')[0].innerText = song.title
-            $('.left>h2')[0].innerText = song.artist
-            $('.right>h1')[0].innerText = song.title
-            $('.right>h2')[0].innerText = song.artist
-            $('.left>figure').css("background-image", "url(" + song.picture + ")")
-        })
+var selectChannel = function (channel) {
+    channel.on('click', function (e) {
+        let $currentChannel = $(e.currentTarget)
+        $currentChannel.addClass('active')
+            .siblings().removeClass('active')
+        selectedChannel = ($currentChannel[0].attributes[1].value)
+        selectedChannelName = ($currentChannel[0].attributes[2].value)
+        songSwitch(selectedChannel)
+    })
 }
 
-var progressUpdate=function(){
+var songSwitch = function (selectedChannel) {
+    $.getJSON('//jirenguapi.applinzi.com/fm/getSong.php',  //请求歌曲API
+        {channel: selectedChannel})
+        .done(function (x) {
+            song = x.song[0]
+            setSong(song)
+            getLyrics(song)
+        })
+}
+var getLyrics = function (song) {
+    $.getJSON('//jirenguapi.applinzi.com/fm/getLyric.php',  //请求歌词API
+        {sid: song.sid})
+        .done(function (x) {
+            if (x.lyric) {
+                console.log(x.lyric)
+                let lyricArray = x.lyric.split('\n')   //string转为array
+                let html = ''
+                lyricArray.forEach((value) => {
+                    html += '<p>' + value.replace(/\[.+?\]/g, '') + '</p> '   //看不懂正则
+                    $('.lyrics').html(html)
+                })
+            } else {
+                $('.lyrics').html('<p>暂无歌词</p>>')
+            }
+
+        })
+}
+var setSong = function (song) {
+    audio.src = song.url
+    $('.right>.tagName')[0].innerText = selectedChannelName
+    $('.left>h1')[0].innerText = song.title
+    $('.left>h2')[0].innerText = song.artist
+    $('.right>h1')[0].innerText = song.title
+    $('.right>h2')[0].innerText = song.artist
+    $('.left>figure').css("background-image", "url(" + song.picture + ")")
+}
+
+var progressUpdate = function () {
     let timer = setInterval(function () {
-        let leftTime = audio.duration-audio.currentTime
-        let min=parseInt(leftTime/60)
-        let sec=parseInt(leftTime%60)
-        if(sec<10){
-            $('.right .duration')[0].innerText='-'+min+':0'+sec
-        }else{
-            $('.right .duration')[0].innerText='-'+min+':'+sec
+        let leftTime = audio.duration - audio.currentTime
+        let min = parseInt(leftTime / 60)
+        let sec = parseInt(leftTime % 60)
+        if (sec < 10) {
+            $('.right .duration')[0].innerText = '-' + min + ':0' + sec
+        } else {
+            $('.right .duration')[0].innerText = '-' + min + ':' + sec
         }
-        let progress=audio.currentTime/audio.duration*100
-        $('.right .currentBar').css("width",progress+"%")
-    }, 1000)
+        let progress = audio.currentTime / audio.duration * 100
+        $('.right .currentBar').css("width", progress + "%")
+    }, 200)
 }

@@ -24,10 +24,6 @@
         x += y
         if(x>limit){x=limit}  //要根据当前视窗实际宽度计算确定
         $('.channels').css({transform: 'translateX(-' + x + '%)'})
-        console.log("x",x)
-        console.log("c",currentWidth)
-        console.log("t",totalWidth)
-
     })
 
 

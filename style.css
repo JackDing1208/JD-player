@@ -1,5 +1,5 @@
 html, body, section {
-    height: 100%;
+    height: 100vh;
     overflow: hidden;
 }
 main .left {
@@ -181,14 +181,24 @@ main .right h2 {
     white-space : nowrap
 }
 
-main .right .lyrics {
+main .right .lyrics-wrapper {
     height: 30vh;
-    font-size: 2vh;
-    line-height: 3vh;
     overflow: hidden;
     margin-bottom: 2vh;
     color: rgba(255, 255, 255, 1);
 }
+main .right .lyrics-wrapper .lyrics{
+    position: relative;
+    top: -6vh;
+    font-size: 2vh;
+    line-height: 3vh;
+    white-space:nowrap ;
+    transition: all 0.5s;
+    transform: translateY(0);
+}
+
+
+
 
 main .progress {
     display: flex;
@@ -208,8 +218,6 @@ main .progress .progressBar .currentBar {
     width: 0%;
     height: 0.8vh;
     border-radius: 3px;
-    transition: width 0.99s;
-
 }
 
 main .progress .duration {
