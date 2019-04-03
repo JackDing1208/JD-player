@@ -92,7 +92,7 @@ main {
 
 .bg {
     position: absolute;
-    z-index: 10;
+    z-index: -1;
     left: 0px;
     top: 0px;
     bottom: 0px;
@@ -195,6 +195,7 @@ main .right .lyrics-wrapper .lyrics{
     white-space:nowrap ;
     transition: all 0.5s;
     transform: translateY(0);
+    color: rgba(255, 255, 255, 1);
 }
 
 
@@ -245,7 +246,6 @@ footer .icon {
     width: 6vh;
     height: 6vh;
     fill: rgba(255, 255, 255, 0.4);
-    display: none;
     transition: all 0.3s;
     cursor: pointer;
 }

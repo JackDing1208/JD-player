@@ -1,13 +1,5 @@
 !function () {
 
-    let $footer = $('footer')
-    $footer.on('mouseenter', function () {
-        $('footer .icon').show()
-    })
-    $footer.on('mouseleave', function () {
-        $('footer .icon').hide()
-    })
-
     let $left = $('.arrow-left')
     let x = 0   //起始位置
     let y = 66    //每次移动距离
