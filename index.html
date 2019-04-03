@@ -2,14 +2,15 @@
 <html lang="zh-Hans">
 <head>
     <meta charset="UTF-8">
-    <!--    <meta name="viewport"
-              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">-->
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="referrer" content="never">
     <title>JD Player</title>
     <link rel="stylesheet" href="./common.css">
     <link rel="stylesheet" href="./style.css">
-    <script src="//at.alicdn.com/t/font_1119708_x39qv1shr1d.js"></script>
+
+    <script src="//at.alicdn.com/t/font_1119708_6q39ay7jwyp.js"></script>
     <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
@@ -17,13 +18,15 @@
     <main>
         <div class="main-wrapper clearfix">
             <div class="left">
+                <h1>Bohemian Rhapsody</h1>
+                <h2>周杰伦</h2>
                 <figure></figure>
                 <div class="action">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#icon-xunhuanbofang"></use>
                     </svg>
                     <svg class="icon hidden" aria-hidden="true">
-                        <use xlink:href="#icon-xunhuanbofang2"></use>
+                        <use xlink:href="#icon-xunhuanjiagongcishu"></use>
                     </svg>
                     <svg class="icon " aria-hidden="true">
                         <use xlink:href="#icon-bofang"></use>
@@ -61,7 +64,7 @@
                     <div class="progressBar">
                         <div class="currentBar"></div>
                     </div>
-                    <div class="duration">-6:00</div>
+                    <div class="duration">-0:00</div>
                 </div>
             </div>
         </div>
@@ -86,6 +89,9 @@
 <script src="./main.js"></script>
 <script src="channel.js"></script>
 <script src="./arrow.js"></script>
+<script>
+    $('.bg').css("z-index","-1")
+</script>
 
 
 

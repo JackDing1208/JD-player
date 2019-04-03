@@ -5,7 +5,7 @@ var song = {}
 
 audio.autoplay = false
 audio.loop = false
-
+audio.volume= 0.5
 
 init = function () {
     $.ajax({
@@ -39,7 +39,7 @@ init = function () {
             selectedChannelName = ($currentChannel[0].attributes[2].value)
             songSwitch(selectedChannel)
         })
-        initPlay($channel,random)
+        initPlay($channel, random)
     })
 }
 init()
@@ -58,6 +58,7 @@ $button.eq(1).on('click', function () {
     audio.loop = false
 })
 
+
 $button.eq(2).on('click', function () {
     audio.play()
 })
@@ -69,36 +70,60 @@ $button.eq(4).on('click', function () {
 })
 
 
-audio.addEventListener('playing', function(){
-    let duration=audio.duration
+audio.addEventListener('playing', function () {
     $button.eq(2).addClass('hidden')
     $button.eq(3).removeClass('hidden')
+    progressUpdate()
 })
 
-audio.addEventListener('pause', function(){
+audio.addEventListener('pause', function () {
     $button.eq(3).addClass('hidden')
     $button.eq(2).removeClass('hidden')
+    window.clearInterval('timer')
+})
+
+audio.addEventListener('ended', function () {
+    if (audio.loop = false) {
+        console.log('end')
+        $button.eq(4).trigger('click')
+    }
 })
 
 
-
-
-var initPlay=function(channel,random){
+var initPlay = function (channel, random) {
     channel.eq(random).trigger('click')
-    audio.autoplay = true
 }
 
 
 var songSwitch = function (selectedChannel) {
     $.getJSON('//jirenguapi.applinzi.com/fm/getSong.php', {channel: selectedChannel})
         .done(function (x) {
+            audio.autoplay = true
             song = x.song[0]
             console.log(song)
             audio.src = song.url
             $('.right>.tagName')[0].innerText = selectedChannelName
+            $('.left>h1')[0].innerText = song.title
+            $('.left>h2')[0].innerText = song.artist
             $('.right>h1')[0].innerText = song.title
             $('.right>h2')[0].innerText = song.artist
             $('.left>figure').eq(0).css("background-image", "url(" + song.picture + ")")
         })
 }
 
+var progressUpdate=function(){
+    let timer = setInterval(function () {
+        let leftTime = audio.duration-audio.currentTime
+        let min=parseInt(leftTime/60)
+        let sec=parseInt(leftTime%60)
+        if(sec<10){
+            $('.right .duration')[0].innerText='-'+min+':0'+sec
+        }else{
+            $('.right .duration')[0].innerText='-'+min+':'+sec
+        }
+        let progress=audio.currentTime/audio.duration*100
+        $('.right .currentBar').css("width",progress+"%")
+        console.log(progress)
+        console.log($('.right .currentBar').width())
+    }, 1000)
+}
