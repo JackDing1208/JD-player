@@ -9,7 +9,7 @@ audio.volume= 0.5
 
 init = function () {
     $.ajax({
-        url: '//api.jirengu.com/fm/getChannels.php',
+        url: '//jirenguapi.applinzi.com/fm/getChannels.php',
         method: 'get'
     }).done(function (x) {
         let info = JSON.parse(x)
@@ -96,7 +96,8 @@ var initPlay = function (channel, random) {
 
 
 var songSwitch = function (selectedChannel) {
-    $.getJSON('//jirenguapi.applinzi.com/fm/getSong.php', {channel: selectedChannel})
+    $.getJSON('//jirenguapi.applinzi.com/fm/getSong.php',
+        {channel: selectedChannel})
         .done(function (x) {
             audio.autoplay = true
             song = x.song[0]
@@ -107,7 +108,7 @@ var songSwitch = function (selectedChannel) {
             $('.left>h2')[0].innerText = song.artist
             $('.right>h1')[0].innerText = song.title
             $('.right>h2')[0].innerText = song.artist
-            $('.left>figure').eq(0).css("background-image", "url(" + song.picture + ")")
+            $('.left>figure').css("background-image", "url(" + song.picture + ")")
         })
 }
 
@@ -123,7 +124,5 @@ var progressUpdate=function(){
         }
         let progress=audio.currentTime/audio.duration*100
         $('.right .currentBar').css("width",progress+"%")
-        console.log(progress)
-        console.log($('.right .currentBar').width())
     }, 1000)
 }
