@@ -3,10 +3,14 @@ var selectedChannel = ''
 var selectedChannelName = ''
 var song = {}
 var allChannel = {}
+var timer1
+var timer2
+var lyricY = 0
 
 audio.autoplay = false
 audio.loop = false
 audio.volume = 0.5
+
 
 var init = function () {
     $.ajax({
@@ -31,86 +35,55 @@ var init = function () {
         allChannel = $('.channel')
         selectChannel(allChannel)
         initPlay(allChannel)
-        audio.autoplay = true
-
     })
 }
-init()
+init.call()
 
 
-$button = $('main .left .action>svg')
-$button.eq(0).on('click', function () {
-    $button.eq(0).addClass('hidden')
-    $button.eq(1).removeClass('hidden')
-    audio.loop = true
-})
+var buttonFn = function () {
+    $button = $('main .left .action>svg')
+    $button.eq(0).on('click', function () {
+        $button.eq(0).addClass('hidden')
+        $button.eq(1).removeClass('hidden')
+        audio.loop = true
+    })
 
-$button.eq(1).on('click', function () {
-    $button.eq(1).addClass('hidden')
-    $button.eq(0).removeClass('hidden')
-    audio.loop = false
-})
-$button.eq(2).on('click', function () {
-    audio.play()
-})
-$button.eq(3).on('click', function () {
-    audio.pause()
-})
-$button.eq(4).on('click', function () {
-    songSwitch(selectedChannel)
-})
-
-
-audio.addEventListener('playing', function () {
-    $button.eq(2).addClass('hidden')
-    $button.eq(3).removeClass('hidden')
+    $button.eq(1).on('click', function () {
+        $button.eq(1).addClass('hidden')
+        $button.eq(0).removeClass('hidden')
+        audio.loop = false
+    })
+    $button.eq(2).on('click', function () {
+        audio.play()
+        audio.autoplay = true
+    })
+    $button.eq(3).on('click', function () {
+        audio.pause()
+    })
+    $button.eq(4).on('click', function () {
+        songSwitch(selectedChannel)
+    })
 
 
-    progressUpdate()
-    lyricsScroll()
-})
+    audio.addEventListener('playing', function () {
+        $button.eq(2).addClass('hidden')
+        $button.eq(3).removeClass('hidden')
+        progressUpdate()
+        lyricsScroll()
+    })
 
-audio.addEventListener('pause', function () {
-    $button.eq(3).addClass('hidden')
-    $button.eq(2).removeClass('hidden')
-    window.clearInterval(timer1)
-    window.clearInterval(timer2)
-    autoNext()
-})
-
-var timer1
-var timer2
-var lyricY = 0
-
-var progressUpdate = function () {
-    timer1 = setInterval(function () {
-        let leftTime = audio.duration - audio.currentTime
-        let min = parseInt(leftTime / 60)
-        let sec = parseInt(leftTime % 60)
-        if (sec < 10) {
-            $('.right .duration')[0].innerText = '-' + min + ':0' + sec
-        } else {
-            $('.right .duration')[0].innerText = '-' + min + ':' + sec
-        }
-        let progress = audio.currentTime / audio.duration * 100
-        $('.right .currentBar').css("width", progress + "%")
-    }, 200)
+    audio.addEventListener('pause', function () {
+        $button.eq(3).addClass('hidden')
+        $button.eq(2).removeClass('hidden')
+        window.clearInterval(timer1)
+        window.clearInterval(timer2)
+        autoNext()
+    })
 }
+buttonFn.call()
 
 
-var lyricsScroll = function () {
-    timer2 = setInterval(function () {
-        lyricY += 1
-        let maxY = $('.lyrics').height() - ($(window).height() * 0.06)
-        if (lyricY > maxY) {
-            lyricY = 0
-        }
-        $('.lyrics').css({transform: 'translateY(-' + lyricY + 'px)'})
-        console.log(lyricY)
-        console.log(maxY)
 
-    }, 200)
-}
 
 var initPlay = function (channel) {
     let random = Math.round(Math.random() * (channel.length - 1))
@@ -143,11 +116,10 @@ var getLyrics = function (song) {
         {sid: song.sid})
         .done(function (x) {
             if (x.lyric) {
-                console.log(x.lyric)
-                let lyricArray = x.lyric.split('\n')   //string转为array
+                let lyricArray = x.lyric.split('\n')   //将string转为array
                 let html = ''
                 lyricArray.forEach((value) => {
-                    html += '<p>' + value.replace(/\[.+?\]/g, '') + '</p> '   //看不懂正则
+                    html += '<p>' + value.replace(/\[.+?\]/g, '') + '</p> '   //正则整理歌词
                     $('.lyrics').html(html)
                 })
             } else {
@@ -172,4 +144,31 @@ var autoNext = function () {
         console.log('end')
         $button.eq(4).trigger('click')
     }
+}
+
+var progressUpdate = function () {
+    timer1 = setInterval(function () {
+        let leftTime = audio.duration - audio.currentTime
+        let min = parseInt(leftTime / 60)
+        let sec = parseInt(leftTime % 60)
+        if (sec < 10) {
+            $('.right .duration')[0].innerText = '-' + min + ':0' + sec
+        } else {
+            $('.right .duration')[0].innerText = '-' + min + ':' + sec
+        }
+        let progress = audio.currentTime / audio.duration * 100
+        $('.right .currentBar').css("width", progress + "%")
+    }, 200)
+}
+
+
+var lyricsScroll = function () {
+    timer2 = setInterval(function () {
+        lyricY += 1
+        let maxY = $('.lyrics').height() - ($(window).height() * 0.06)
+        if (lyricY > maxY) {
+            lyricY = 0
+        }
+        $('.lyrics').css({transform: 'translateY(-' + lyricY + 'px)'})
+    }, 200)
 }
