@@ -30,8 +30,9 @@ var init = function () {
         })
         allChannel = $('.channel')
         selectChannel(allChannel)
-        audio.autoplay = true
         initPlay(allChannel)
+        audio.autoplay = true
+
     })
 }
 init()
@@ -63,28 +64,53 @@ $button.eq(4).on('click', function () {
 audio.addEventListener('playing', function () {
     $button.eq(2).addClass('hidden')
     $button.eq(3).removeClass('hidden')
+
+
     progressUpdate()
     lyricsScroll()
 })
 
-var lyricsScroll = function () {
-    setInterval(function () {
-
-    }), 500
-}
-
-
 audio.addEventListener('pause', function () {
     $button.eq(3).addClass('hidden')
     $button.eq(2).removeClass('hidden')
-    window.clearInterval('timer')
-    console.log(audio.ended)
-    if (audio.ended === true && audio.loop === false) {
-        console.log('end')
-        $button.eq(4).trigger('click')
-    }
+    window.clearInterval(timer1)
+    window.clearInterval(timer2)
+    autoNext()
 })
 
+var timer1
+var timer2
+var lyricY = 0
+
+var progressUpdate = function () {
+    timer1 = setInterval(function () {
+        let leftTime = audio.duration - audio.currentTime
+        let min = parseInt(leftTime / 60)
+        let sec = parseInt(leftTime % 60)
+        if (sec < 10) {
+            $('.right .duration')[0].innerText = '-' + min + ':0' + sec
+        } else {
+            $('.right .duration')[0].innerText = '-' + min + ':' + sec
+        }
+        let progress = audio.currentTime / audio.duration * 100
+        $('.right .currentBar').css("width", progress + "%")
+    }, 200)
+}
+
+
+var lyricsScroll = function () {
+    timer2 = setInterval(function () {
+        lyricY += 1
+        let maxY = $('.lyrics').height() - ($(window).height() * 0.06)
+        if (lyricY > maxY) {
+            lyricY = 0
+        }
+        $('.lyrics').css({transform: 'translateY(-' + lyricY + 'px)'})
+        console.log(lyricY)
+        console.log(maxY)
+
+    }, 200)
+}
 
 var initPlay = function (channel) {
     let random = Math.round(Math.random() * (channel.length - 1))
@@ -108,6 +134,8 @@ var songSwitch = function (selectedChannel) {
             song = x.song[0]
             setSong(song)
             getLyrics(song)
+            window.clearInterval(timer2)
+            lyricY = 0
         })
 }
 var getLyrics = function (song) {
@@ -138,17 +166,10 @@ var setSong = function (song) {
     $('.left>figure').css("background-image", "url(" + song.picture + ")")
 }
 
-var progressUpdate = function () {
-    let timer = setInterval(function () {
-        let leftTime = audio.duration - audio.currentTime
-        let min = parseInt(leftTime / 60)
-        let sec = parseInt(leftTime % 60)
-        if (sec < 10) {
-            $('.right .duration')[0].innerText = '-' + min + ':0' + sec
-        } else {
-            $('.right .duration')[0].innerText = '-' + min + ':' + sec
-        }
-        let progress = audio.currentTime / audio.duration * 100
-        $('.right .currentBar').css("width", progress + "%")
-    }, 200)
+
+var autoNext = function () {
+    if (audio.ended === true && audio.loop === false) {
+        console.log('end')
+        $button.eq(4).trigger('click')
+    }
 }

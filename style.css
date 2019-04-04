@@ -1,12 +1,14 @@
 html, body, section {
-    height: 100vh;
+    height: 100%;
     overflow: hidden;
 }
+
 main .left {
     float: left;
     width: 50vh;
     height: 60vh;
 }
+
 main .right {
     float: left;
     width: 60vh;
@@ -14,33 +16,62 @@ main .right {
     text-align: left;
     margin-left: 10vh;
 }
-main .left h1{
+
+main .left h1 {
     font-size: 5vh;
     margin: 2vh 0;
     color: rgba(255, 255, 255, 1);
-    white-space : nowrap;
+    white-space: nowrap;
     display: none;
 }
-main .left h2{
+
+main .left h2 {
     color: rgba(255, 255, 255, 1);
     margin-bottom: 2vh;
     font-size: 3vh;
-    white-space : nowrap;
+    white-space: nowrap;
     display: none;
 }
+
+main .left > figure {
+    margin: 0 auto;
+    width: 46vh;
+    height: 46vh;
+    background-image: url(http://cloud.hunger-valley.com/music/public_tuijian_spring.jpg-middle);
+    background-size: cover;
+    background-position: center center;
+}
+
+
 footer .channel-wrapper {
     overflow: hidden;
     width: 120vh;
 }
+
 main {
     height: calc(100% - 20vh);
     padding: 10vh 0;
     text-align: center;
 }
 
-@media (max-width:950px) {
+@media (max-width: 950px) {
     main .right {
         display: none;
+    }
+
+    main .left h1 {
+        font-size: 4vh;
+        margin: 1vh 0;
+    }
+
+    main .left h2 {
+        margin-bottom: 1vh;
+    }
+
+    main .left > figure {
+        margin: 0 auto;
+        width: 40vh;
+        height: 40vh;
     }
 
     footer .channel-wrapper {
@@ -48,12 +79,14 @@ main {
     }
 
     main {
-        padding:2vh 0;
+        padding: 2vh 0;
     }
-    main .left h1{
+
+    main .left h1 {
         display: block;
     }
-    main .left h2{
+
+    main .left h2 {
         display: block;
     }
 }
@@ -116,22 +149,11 @@ main {
 }
 
 
-
-
 main .main-wrapper {
     display: inline-block;
     max-width: 90%;
 }
 
-
-main .left > figure {
-    margin: 0 auto;
-    width: 46vh;
-    height: 46vh;
-    background-image: url(http://cloud.hunger-valley.com/music/public_tuijian_spring.jpg-middle);
-    background-size: cover;
-    background-position: center center;
-}
 
 main .left .action {
     width: 46vh;
@@ -171,14 +193,14 @@ main .right h1 {
     font-size: 5vh;
     margin: 2vh 0;
     color: rgba(255, 255, 255, 1);
-    white-space : nowrap
+    white-space: nowrap
 }
 
 main .right h2 {
     color: rgba(255, 255, 255, 1);
     margin-bottom: 2vh;
     font-size: 3vh;
-    white-space : nowrap
+    white-space: nowrap
 }
 
 main .right .lyrics-wrapper {
@@ -187,18 +209,17 @@ main .right .lyrics-wrapper {
     margin-bottom: 2vh;
     color: rgba(255, 255, 255, 1);
 }
-main .right .lyrics-wrapper .lyrics{
+
+main .right .lyrics-wrapper .lyrics {
     position: relative;
     top: -6vh;
     font-size: 2vh;
     line-height: 3vh;
-    white-space:nowrap ;
-    transition: all 0.5s;
+    white-space: nowrap;
+    transition: all 0.2s;
     transform: translateY(0);
     color: rgba(255, 255, 255, 1);
 }
-
-
 
 
 main .progress {
