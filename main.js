@@ -101,15 +101,20 @@ var selectChannel = function (channel) {
 }
 
 var songSwitch = function (selectedChannel) {
-    $.getJSON('//jirenguapi.applinzi.com/fm/getSong.php',  //请求歌曲API
-        {channel: selectedChannel})
-        .done(function (x) {
-            song = x.song[0]
-            setSong(song)
-            getLyrics(song)
-            window.clearInterval(timer2)
-            lyricY = 0
-        })
+    audio.pause()
+    $('.right .duration')[0].innerText = '-0:00'
+    setTimeout(function () {
+        $.getJSON('//jirenguapi.applinzi.com/fm/getSong.php',  //请求歌曲API
+            {channel: selectedChannel})
+            .done(function (x) {
+                song = x.song[0]
+                setSong(song)
+                getLyrics(song)
+                window.clearInterval(timer2)
+                lyricY = 0
+            })
+    },0)
+
 }
 var getLyrics = function (song) {
     $.getJSON('//jirenguapi.applinzi.com/fm/getLyric.php',  //请求歌词API
