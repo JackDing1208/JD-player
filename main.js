@@ -1,18 +1,22 @@
-var audio = new Audio()
-var selectedChannel = ''
-var selectedChannelName = ''
-var song = {}
-var allChannel = {}
-var timer1
-var timer2
-var lyricY = 0
+createAuido()
+channelInit()
+buttonInit()
 
-audio.autoplay = false
-audio.loop = false
-audio.volume = 0.5
+function createAuido() {
+    var audio = new Audio()
+    audio.autoplay = false
+    audio.loop = false
+    audio.volume = 0.5
+    var selectedChannel = ''
+    var selectedChannelName = ''
+    var song = {}
+    var allChannel = {}
+    var timer1
+    var timer2
+    var lyricY = 0
+}
 
-
-var init = function () {
+function channelInit() {
     $.ajax({
         url: '//jirenguapi.applinzi.com/fm/getChannels.php',    //请求频道API
         method: 'get'
@@ -37,10 +41,10 @@ var init = function () {
         initPlay(allChannel)
     })
 }
-init.call()
 
 
-var buttonFn = function () {
+
+function buttonInit() {
     $button = $('main .left .action>svg')
     $button.eq(0).on('click', function () {
         $button.eq(0).addClass('hidden')
@@ -80,7 +84,7 @@ var buttonFn = function () {
         autoNext()
     })
 }
-buttonFn.call()
+
 
 
 
