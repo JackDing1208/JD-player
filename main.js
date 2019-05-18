@@ -1,20 +1,18 @@
-createAuido()
+var audio = new Audio()
+audio.autoplay = false
+audio.loop = false
+audio.volume = 0.5
+var selectedChannel = ''
+var selectedChannelName = ''
+var song = {}
+var allChannel = {}
+var timer1
+var timer2
+var lyricY = 0
+
+
 channelInit()
 buttonInit()
-
-function createAuido() {
-    var audio = new Audio()
-    audio.autoplay = false
-    audio.loop = false
-    audio.volume = 0.5
-    var selectedChannel = ''
-    var selectedChannelName = ''
-    var song = {}
-    var allChannel = {}
-    var timer1
-    var timer2
-    var lyricY = 0
-}
 
 function channelInit() {
     $.ajax({
@@ -41,7 +39,6 @@ function channelInit() {
         initPlay(allChannel)
     })
 }
-
 
 
 function buttonInit() {
@@ -86,9 +83,6 @@ function buttonInit() {
 }
 
 
-
-
-
 var initPlay = function (channel) {
     let random = Math.round(Math.random() * (channel.length - 1))
     channel.eq(random).trigger('click')
@@ -117,7 +111,7 @@ var songSwitch = function (selectedChannel) {
                 window.clearInterval(timer2)
                 lyricY = 0
             })
-    },0)
+    }, 0)
 
 }
 var getLyrics = function (song) {
