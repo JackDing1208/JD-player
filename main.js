@@ -13,6 +13,10 @@ var lyricY = 0
 
 channelInit()
 buttonInit()
+selectProgress()
+
+
+
 
 function channelInit() {
     $.ajax({
@@ -120,6 +124,7 @@ var getLyrics = function (song) {
         .done(function (x) {
             if (x.lyric) {
                 let lyricArray = x.lyric.split('\n')   //将string转为array
+                console.log(lyricArray);
                 let html = ''
                 lyricArray.forEach((value) => {
                     html += '<p>' + value.replace(/\[.+?\]/g, '') + '</p> '   //正则整理歌词
@@ -175,3 +180,17 @@ var lyricsScroll = function () {
         $('.lyrics').css({transform: 'translateY(-' + lyricY + 'px)'})
     }, 200)
 }
+
+
+function selectProgress(){
+    let $progress=$('.progressBar')
+    let {left,width}=$progress[0].getBoundingClientRect()
+    $progress.on('click',(e)=>{
+        let target=e.clientX;
+        let progress= (target-left)/width
+        console.log(progress);
+        audio.currentTime=audio.duration*progress
+    })
+}
+
+
